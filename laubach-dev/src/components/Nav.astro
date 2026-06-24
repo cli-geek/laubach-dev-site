@@ -1,0 +1,57 @@
+---
+const currentPath = Astro.url.pathname;
+---
+<nav aria-label="Primary">
+    <a class="wordmark" href="/" aria-current={currentPath === "/" ? "page" : undefined}>[ laubach.dev ]</a>
+    <ul class="states-container">
+        <li><a class="state-link" href="/projects" aria-current={currentPath === "/projects" ? "page" : undefined}>Projects</a></li>
+        <li><a class="state-link" href="/about" aria-current={currentPath === "/about" ? "page" : undefined}>About</a></li>
+        <li><a class="state-link" href="/contact" aria-current={currentPath === "/contact" ? "page" : undefined}>Contact</a></li>
+    </ul>
+</nav>
+<style>
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin: 0 var(--space-4);
+
+        padding: var(--space-1) 0;
+    }
+
+    nav a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .wordmark {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: var(--text-xl);
+    }
+
+    .states-container {
+        display: flex;
+        align-items: center;
+
+        list-style: none;
+
+        margin-right: var(--space-1);
+
+        gap: var(--space-8);
+    }
+
+    .states-container a {
+        transition: color 0.3s ease;
+    }
+
+    .states-container a:hover {
+        color: var(--color-accent-hover);
+    }
+
+    .states-container a[aria-current="page"] {
+        font-weight: 600;
+    }
+
+</style>

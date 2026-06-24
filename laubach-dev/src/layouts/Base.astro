@@ -1,0 +1,25 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const { title = "laubach.dev", description = "Software engineer — portfolio and writing." } = Astro.props;
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+        <meta name="description" content={description} />
+		<title>{title}</title>
+	</head>
+	<body>
+        <Nav />
+        <main>
+            <slot />
+        </main>
+        <Footer />
+	</body>
+</html>
+
