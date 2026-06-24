@@ -2,22 +2,27 @@
 const currentPath = Astro.url.pathname;
 ---
 <nav aria-label="Primary">
-    <a class="wordmark" href="/" aria-current={currentPath === "/" ? "page" : undefined}>[ laubach.dev ]</a>
-    <ul class="states-container">
-        <li><a class="state-link" href="/projects" aria-current={currentPath === "/projects" ? "page" : undefined}>Projects</a></li>
-        <li><a class="state-link" href="/about" aria-current={currentPath === "/about" ? "page" : undefined}>About</a></li>
-        <li><a class="state-link" href="/contact" aria-current={currentPath === "/contact" ? "page" : undefined}>Contact</a></li>
-    </ul>
+    <div class="container">
+        <a class="wordmark" href="/" aria-current={currentPath === "/" ? "page" : undefined}>[ laubach.dev ]</a>
+        <ul class="states-container">
+            <li><a class="state-link" href="/projects" aria-current={currentPath === "/projects" ? "page" : undefined}>Projects</a></li>
+            <li><a class="state-link" href="/about" aria-current={currentPath === "/about" ? "page" : undefined}>About</a></li>
+            <li><a class="state-link" href="/contact" aria-current={currentPath === "/contact" ? "page" : undefined}>Contact</a></li>
+        </ul>
+    </div>
 </nav>
 <style>
     nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
 
-        margin: 0 var(--space-4);
+        /* margin: 0 var(--space-4); */
 
-        padding: var(--space-1) 0;
+        padding: var(--space-1) var(--space-4);
+
+        box-shadow: var(--shadow-sm);
+        background: var(--color-surface);
     }
 
     nav a {
@@ -25,10 +30,20 @@ const currentPath = Astro.url.pathname;
         text-decoration: none;
     }
 
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        max-width: var(--max-width-wide);
+        margin-inline: auto;
+    }
+
     .wordmark {
         font-family: var(--font-mono);
         font-weight: 600;
         font-size: var(--text-xl);
+        white-space: nowrap;
     }
 
     .states-container {
@@ -39,11 +54,11 @@ const currentPath = Astro.url.pathname;
 
         margin-right: var(--space-1);
 
-        gap: var(--space-8);
+        gap: var(--space-12);
     }
 
     .states-container a {
-        transition: color 0.3s ease;
+        transition: color 0.15s ease;
     }
 
     .states-container a:hover {
@@ -53,5 +68,18 @@ const currentPath = Astro.url.pathname;
     .states-container a[aria-current="page"] {
         font-weight: 600;
     }
+
+    /* mobile styles */
+    @media (max-width: 480px) {
+    .wordmark {
+        font-size: var(--text-base);   /* down from --text-xl */
+    }
+    .states-container {
+        gap: var(--space-3);            /* down from --space-8 */
+    }
+    nav {
+        padding-inline: var(--space-2); /* reclaim edge space */
+    }
+}
 
 </style>
