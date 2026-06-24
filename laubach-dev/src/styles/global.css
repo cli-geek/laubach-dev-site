@@ -73,9 +73,14 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
+
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
+  flex: 1;
   max-width: var(--max-width-wide);
   margin-inline: auto;
   padding: var(--space-8) var(--space-4);
