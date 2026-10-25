@@ -1,0 +1,39 @@
+---
+interface Props {
+    n: string;
+    name: string;
+}
+const { n, name } = Astro.props;
+---
+<div class="marker"><span class="n">{n}</span><span class="bar">|</span><h2 class="name">{name}</h2></div>
+<style>
+    .marker {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: var(--space-6);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        letter-spacing: 0.04em;
+    }
+    .marker::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid var(--color-rule);
+        transform: translateY(-4px);
+    }
+    .n {
+        color: var(--color-accent);
+        font-weight: 700;
+    }
+    .bar {
+        color: var(--color-rule);
+    }
+    .name {
+        font-size: inherit;
+        font-weight: 400;
+        line-height: inherit;
+        color: var(--color-text);
+        text-transform: lowercase;
+    }
+</style>

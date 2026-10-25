@@ -1,54 +1,68 @@
 ---
+import { execSync } from "node:child_process";
+
 const year = new Date().getFullYear();
+
+// Short git SHA at build time; CI may not have .git, so omit when unavailable.
+let sha = "";
+try {
+    sha = execSync("git rev-parse --short HEAD", {
+        stdio: ["ignore", "pipe", "ignore"],
+    })
+        .toString()
+        .trim();
+} catch {
+    sha = "";
+}
 ---
-<footer class="footer-container">
-    <p>© {year} Austin Laubach</p>
-    <ul class="links-container">
-        <li class="link">
-            <a href="https://github.com/cli-geek" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </li>
-        <li class="link">
-            <a href="https://www.linkedin.com/in/austinlaubach/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </li>
-        <li class="link">
-            <a href="/contact">Contact</a>
-        </li>
-    </ul>
+<footer>
+    <div class="footer-container">
+        <span>{sha && <><span class="ok">●</span> build {sha}</>}</span>
+        <ul class="links-container">
+            <li><a href="https://github.com/cli-geek" target="_blank" rel="noopener noreferrer">github</a></li>
+            <li><a href="https://www.linkedin.com/in/austinlaubach/" target="_blank" rel="noopener noreferrer">linkedin</a></li>
+            <li><a href="/contact">contact</a></li>
+        </ul>
+        <span>© {year} Austin Laubach</span>
+    </div>
 </footer>
 <style>
+    footer {
+        margin-top: var(--space-12);
+        border-top: 1px solid var(--color-rule);
+    }
+
     .footer-container {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        flex-wrap: wrap;
 
-        margin-top: var(--space-8);
-        padding: var(--space-2) var(--space-2);
-        border-top: 1px solid var(--color-border);
+        max-width: var(--max-width-wide);
+        margin-inline: auto;
+        padding: 20px var(--gutter);
 
-        color: var(--color-text-muted);
-        font-size: var(--text-sm);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-muted);
+    }
+
+    .ok {
+        color: var(--color-ok);
     }
 
     .links-container {
         display: flex;
-
-        padding: 0px;
-        gap: var(--space-4);
-
+        gap: 20px;
         list-style: none;
-
-        color: inherit;
+        padding: 0;
     }
 
     .links-container a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.15s ease;
+        color: var(--color-muted);
     }
 
     .links-container a:hover {
         color: var(--color-text);
     }
-
 </style>

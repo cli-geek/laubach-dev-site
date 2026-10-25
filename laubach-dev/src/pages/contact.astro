@@ -1,20 +1,147 @@
 ---
 import Base from "../layouts/Base.astro";
----
-<Base title="Contact - laubach.dev" description="Things I've built.">
-    <div class="container">
-        <h1>Contact Page</h1>
-        <p>[Under Construction]</p>
-    </div>
-</Base>
-<style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+import { WEB3FORMS_ACCESS_KEY } from "../config";
 
-    h1, p {
-        text-align: center;
+const live = WEB3FORMS_ACCESS_KEY !== "";
+---
+<Base title="Contact - laubach.dev" description="Contact Austin Laubach at hello@laubach.dev or through the form. Looking for full-time roles from May 2027.">
+    <section>
+        <h1 class="page-title">contact</h1>
+        <div class="box">
+            <div class="addr">hello@laubach.dev</div>
+            <a class="btn" href="mailto:hello@laubach.dev">send email</a>
+        </div>
+        <p class="avail">I'm looking for full-time roles starting May 2027. I'm in the Baltimore/DC area and open to local or fully remote work. I'm not looking to relocate.</p>
+
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            {!live && <p class="note">The form isn't live yet. Email hello@laubach.dev instead.</p>}
+            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="subject" value="New message from laubach.dev" />
+            <input type="hidden" name="from_name" value="laubach.dev contact form" />
+            <input type="checkbox" name="botcheck" id="botcheck" class="hp" tabindex="-1" autocomplete="off" hidden />
+            <fieldset disabled={!live}>
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required autocomplete="name" />
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" />
+                </div>
+                <div class="field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
+                </div>
+                <button class="btn primary" type="submit">send message</button>
+            </fieldset>
+            <p id="form-status" role="status"></p>
+        </form>
+    </section>
+</Base>
+<script>
+    const form = document.querySelector<HTMLFormElement>("#contact-form");
+    const status = document.querySelector<HTMLElement>("#form-status");
+    const button = form?.querySelector<HTMLButtonElement>("button[type=submit]");
+    if (form && status && button) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            status.textContent = "";
+            button.disabled = true;
+            button.textContent = "sending…";
+            try {
+                const res = await fetch(form.action, {
+                    method: "POST",
+                    headers: { Accept: "application/json" },
+                    body: new FormData(form),
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    status.textContent = "Sent. I'll reply to the email you gave.";
+                    form.reset();
+                } else {
+                    status.textContent = "That didn't send. Email hello@laubach.dev instead.";
+                }
+            } catch {
+                status.textContent = "That didn't send. Email hello@laubach.dev instead.";
+            } finally {
+                button.disabled = false;
+                button.textContent = "send message";
+            }
+        });
+    }
+</script>
+<style>
+    .box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-6);
+        flex-wrap: wrap;
+        border: 1px solid var(--color-rule);
+        border-radius: var(--radius);
+        padding: var(--space-6);
+        background: var(--color-surface);
+    }
+    .addr {
+        font-family: var(--font-mono);
+        font-size: var(--text-xl);
+        font-weight: 500;
+        overflow-wrap: anywhere;
+    }
+    .avail {
+        margin-top: var(--space-6);
+        color: var(--color-muted);
+    }
+    form {
+        margin-top: var(--space-8);
+        max-width: var(--max-width);
+    }
+    fieldset {
+        border: 0;
+        padding: 0;
+        min-width: 0;
+        display: grid;
+        gap: var(--space-4);
+    }
+    .field {
+        display: grid;
+        gap: var(--space-1);
+    }
+    label {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-muted);
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        padding: 9px 12px;
+        background: var(--color-surface);
+        color: var(--color-text);
+        border: 1px solid var(--color-rule);
+        border-radius: 3px;
+    }
+    fieldset:disabled {
+        opacity: 0.5;
+    }
+    .note {
+        margin-bottom: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-muted);
+    }
+    button {
+        justify-self: start;
+    }
+    #form-status {
+        margin-top: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+    }
+    @media (max-width: 640px) {
+        .addr {
+            font-size: var(--text-lg);
+        }
     }
 </style>

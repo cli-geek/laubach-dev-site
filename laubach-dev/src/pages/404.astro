@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import SectionMarker from "../components/SectionMarker.astro";
+---
+<Base title="Not found - laubach.dev" description="That page doesn't exist on laubach.dev.">
+    <section>
+        <SectionMarker n="404" name="not found" />
+        <p class="err">bash: <span id="missing-path">this page</span>: No such file or directory</p>
+        <p class="links"><a class="btn primary" href="/">home</a> <a class="btn" href="/projects">projects</a></p>
+    </section>
+</Base>
+<script>
+    const el = document.querySelector<HTMLElement>("#missing-path");
+    if (el && location.pathname) el.textContent = location.pathname;
+</script>
+<style>
+    .err {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-muted);
+        overflow-wrap: anywhere;
+    }
+    .err span {
+        color: var(--color-text);
+    }
+    .links {
+        margin-top: var(--space-6);
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+    }
+</style>

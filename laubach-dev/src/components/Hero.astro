@@ -1,0 +1,165 @@
+---
+---
+<header class="hero">
+    <div class="prompt"><span class="p">austin@laubach</span>:~$ whoami<span class="cursor" aria-hidden="true"></span></div>
+    <h1>Austin Laubach</h1>
+    <p class="lede">Software engineering intern. I build{" "}<span class="rot" aria-hidden="true"><span class="rot-w">command-line tools</span><span class="rot-w">web apps</span><span class="rot-w">games</span></span><span class="sr-only">command-line tools, web apps, and games</span>.<br>
+        My strongest skills are <strong>Linux, networking, and setting up systems.</strong></p>
+    <div class="cta">
+        <a class="btn primary" href="/projects">view projects</a>
+        <a class="btn" href="/resume.pdf">resume.pdf</a>
+        <a class="btn" href="https://github.com/cli-geek" target="_blank" rel="noopener noreferrer">github/cli-geek</a>
+    </div>
+</header>
+<script>
+    const box = document.querySelector<HTMLElement>(".rot");
+    if (box) {
+        const words = [...box.children] as HTMLElement[];
+        let i = 0;
+        const fit = (el: HTMLElement) => {
+            box.style.width = el.offsetWidth + "px";
+        };
+        fit(words[0]);
+        words[0].classList.add("on");
+        box.classList.add("ready");
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            setInterval(() => {
+                const cur = words[i];
+                i = (i + 1) % words.length;
+                const next = words[i];
+                cur.classList.remove("on");
+                cur.classList.add("out");
+                next.classList.add("on");
+                fit(next);
+                // after the roll-out finishes, snap the old word back below without animating
+                setTimeout(() => {
+                    cur.classList.add("park");
+                    cur.classList.remove("out");
+                    void cur.offsetWidth;
+                    cur.classList.remove("park");
+                }, 600);
+            }, 2600);
+        }
+    }
+</script>
+<style>
+    .hero {
+        padding-block: 40px var(--space-2);
+        display: grid;
+        gap: 20px;
+    }
+    .prompt {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-muted);
+    }
+    .prompt .p {
+        color: var(--color-ok);
+    }
+    .cursor {
+        display: inline-block;
+        width: 0.6em;
+        height: 1.1em;
+        background: var(--color-accent);
+        vertical-align: text-bottom;
+        margin-left: 2px;
+        animation: blink 1.1s steps(1) infinite;
+    }
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+    h1 {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xl);
+        line-height: 1.08;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+    }
+    .lede {
+        font-size: var(--text-lg);
+        color: var(--color-muted);
+        max-width: 34em;
+    }
+    .lede strong {
+        color: var(--color-text);
+        font-weight: 500;
+    }
+    .cta {
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        margin-top: var(--space-2);
+    }
+
+    /* rotating "I build ___" cylinder */
+    .rot {
+        position: relative;
+        display: inline-block;
+        vertical-align: bottom;
+        height: 1.6em;
+        overflow: hidden;
+        perspective: 400px;
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: 0.95em;
+        border-bottom: 1px solid var(--color-accent);
+        transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .rot-w {
+        position: absolute;
+        left: 0;
+        top: 0;
+        white-space: nowrap;
+        line-height: 1.6em;
+        transform-origin: 50% 50% -0.8em;
+        transform: translateY(100%) rotateX(-80deg);
+        opacity: 0;
+        transition:
+            transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+            opacity 0.45s ease;
+    }
+    /* rest state before JS runs: first word visible and sizing the box */
+    .rot:not(.ready) .rot-w:first-child {
+        position: relative;
+        transform: none;
+        opacity: 1;
+    }
+    /* incoming word: fade in slightly after it starts rolling up */
+    .rot-w.on {
+        transform: none;
+        opacity: 1;
+        transition:
+            transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+            opacity 0.3s ease 0.15s;
+    }
+    /* outgoing word: fade out quickly so the two don't overlap */
+    .rot-w.out {
+        transform: translateY(-100%) rotateX(80deg);
+        opacity: 0;
+        transition:
+            transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+            opacity 0.2s ease;
+    }
+    /* parked below, hidden: no visible travel back down */
+    .rot-w.park {
+        transition: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .cursor {
+            animation: none;
+        }
+        .rot,
+        .rot-w {
+            transition: none;
+        }
+    }
+    @media (max-width: 640px) {
+        .hero {
+            padding-block: 32px var(--space-2);
+        }
+    }
+</style>

@@ -1,18 +1,358 @@
 ---
 import Base from "../layouts/Base.astro";
+import SectionMarker from "../components/SectionMarker.astro";
+import Prompt from "../components/Prompt.astro";
+
+const experience = [
+    {
+        role: "Software Engineering Intern",
+        org: "Woodsong Technologies",
+        place: "Annapolis Junction, MD",
+        dates: "Jun 2026 – now",
+        current: true,
+        text: "IoT proof-of-concept: communication layer design, React telemetry dashboard, HTTP loopback proxy, Python networking services on Linux with systemd.",
+    },
+    {
+        role: "Print & Marketing Associate",
+        org: "Staples",
+        place: "Baltimore, MD",
+        dates: "Sep 2022 – now",
+        current: true,
+        text: "",
+    },
+    {
+        role: "Entry Level PC Technician (contract)",
+        org: "Data Networks",
+        place: "Baltimore, MD",
+        dates: "Jun – Aug 2021",
+        current: false,
+        text: "Configured 25+ Juniper switches a day for enterprise deployments.",
+    },
+];
+
+const skills = [
+    { group: "Languages", items: ["C", "C++", "Rust", "Python", "JavaScript", "Swift", "GDScript", "Bash", "x86 assembly", "RISC-V assembly"] },
+    { group: "Web", items: ["React", "HTML", "CSS", "REST APIs"] },
+    { group: "Systems and networking", items: ["Linux", "Git", "systemd", "Cisco networking", "Juniper networking", "system imaging"] },
+    { group: "Tools", items: ["Godot", "SQLite", "Pandas", "Flask"] },
+];
 ---
-<Base title="About - laubach.dev" description="Things I've built.">
-    <h1>About Page</h1>
-    <p>[Under Construction]</p>
+<Base title="About - laubach.dev" description="About Austin Laubach: UMBC computer science student graduating May 2027, experience, skills, and availability.">
+    <header class="intro">
+        <Prompt cmd="cat about.md" />
+        <h1 class="page-title">about</h1>
+        <div class="intro-grid">
+            <div class="bio">
+                <p class="lead">I'm Austin Laubach. I was born and raised in <strong>Baltimore, Maryland</strong>, and I'm finishing a <strong>B.S. in Computer Science at UMBC</strong>, graduating in May 2027.</p>
+                <p>Right now I build whatever interests me or fixes a problem in my own life: a job-application tool, a browser extension, a battery indicator for macOS, a multiplayer game. Next I want to work closer to the hardware: <strong>signal processing and lower-level C++</strong>, toward my long-term goal of working in <strong>biocomputing</strong>. I'd also like to do more with games. I love them, and I enjoy making them.</p>
+                <p>Outside of code I read and watch a lot of science fiction, and I hike.</p>
+            </div>
+            <dl class="facts card">
+                <div><dt>based in</dt><dd>Baltimore, MD</dd></div>
+                <div><dt>studying</dt><dd>B.S. Computer Science, UMBC</dd></div>
+                <div><dt>graduating</dt><dd>May 2027</dd></div>
+                <div><dt>status</dt><dd><span class="dot" aria-hidden="true">●</span> open to full-time roles</dd></div>
+            </dl>
+        </div>
+    </header>
+
+    <section id="education">
+        <SectionMarker n="01" name="education" />
+        <article class="edu card">
+            <div>
+                <h3>University of Maryland, Baltimore County</h3>
+                <p>B.S. Computer Science · Baltimore, MD</p>
+            </div>
+            <div class="edu-date">
+                <span class="big">May 2027</span>
+                <span class="small">expected</span>
+            </div>
+        </article>
+    </section>
+
+    <section id="experience">
+        <SectionMarker n="02" name="experience" />
+        <ol class="timeline">
+            {experience.map((e) => (
+                <li class:list={["entry", { current: e.current }]}>
+                    <span class="when">{e.dates}</span>
+                    <span class="node" aria-hidden="true"></span>
+                    <article class="card job">
+                        <h3>{e.role}</h3>
+                        <p class="org">{e.org} · {e.place}</p>
+                        {e.text && <p class="desc">{e.text}</p>}
+                    </article>
+                </li>
+            ))}
+        </ol>
+    </section>
+
+    <section id="skills">
+        <SectionMarker n="03" name="skills" />
+        <div class="skills">
+            {skills.map((s) => (
+                <article class="card skill">
+                    <h3>{s.group}</h3>
+                    <ul class="tags">
+                        {s.items.map((t) => <li class="tag">{t}</li>)}
+                    </ul>
+                </article>
+            ))}
+        </div>
+    </section>
+
+    <section id="availability">
+        <SectionMarker n="04" name="availability" />
+        <article class="card avail">
+            <p class="status"><span class="dot" aria-hidden="true">●</span> Open to full-time roles from May 2027</p>
+            <p>I'm looking for full-time roles starting May 2027. I'm in the Baltimore/DC area and open to local or fully remote work. I'm not looking to relocate.</p>
+            <div class="actions">
+                <a class="btn primary" href="/resume.pdf">resume.pdf</a>
+                <a class="btn" href="/contact">contact me</a>
+            </div>
+        </article>
+    </section>
 </Base>
 <style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    section {
+        padding-block: var(--space-8);
+    }
+    h3 {
+        font-family: var(--font-mono);
+        font-size: var(--text-base);
+        font-weight: 700;
+    }
+    strong {
+        color: var(--color-text);
+        font-weight: 500;
+    }
+    .dot {
+        color: var(--color-ok);
     }
 
-    h1, p {
-        text-align: center;
+    /* intro: bio beside a quick-facts panel */
+    /* same top spacing and heading gap as the other pages */
+    .intro {
+        padding-block: 40px var(--space-8);
+    }
+    .intro-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+        gap: var(--space-8);
+        align-items: start;
+    }
+    .bio {
+        display: grid;
+        gap: var(--space-4);
+        color: var(--color-muted);
+    }
+    .bio p {
+        max-width: 62ch;
+    }
+    .bio .lead {
+        font-size: var(--text-lg);
+        color: var(--color-text);
+        line-height: 1.5;
+    }
+    .facts {
+        margin: 0;
+        padding: 20px 22px;
+        display: grid;
+        gap: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+    }
+    .facts div {
+        display: grid;
+        gap: 2px;
+    }
+    .facts dt {
+        font-size: var(--text-xs);
+        color: var(--color-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+    .facts dd {
+        margin: 0;
+    }
+
+    /* education */
+    .edu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-6);
+        flex-wrap: wrap;
+        padding: 22px 24px;
+    }
+    .edu h3 {
+        font-size: var(--text-lg);
+    }
+    .edu p {
+        color: var(--color-muted);
+        font-size: var(--text-sm);
+        margin-top: var(--space-1);
+    }
+    .edu-date {
+        display: grid;
+        justify-items: end;
+        font-family: var(--font-mono);
+    }
+    .edu-date .big {
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--color-accent);
+        font-variant-numeric: tabular-nums;
+    }
+    .edu-date .small {
+        font-size: var(--text-xs);
+        color: var(--color-muted);
+    }
+
+    /* experience: dates | rail | card */
+    .timeline {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        display: grid;
+        gap: var(--space-4);
+    }
+    .entry {
+        display: grid;
+        grid-template-columns: 9rem 14px minmax(0, 1fr);
+        gap: var(--space-4);
+        align-items: start;
+        position: relative;
+    }
+    /* the rail: a line through every node column */
+    .entry::before {
+        content: "";
+        position: absolute;
+        left: calc(9rem + var(--space-4) + 6px);
+        top: 0;
+        bottom: calc(-1 * var(--space-4));
+        border-left: 1px solid var(--color-rule);
+    }
+    .entry:last-child::before {
+        bottom: auto;
+        height: 26px;
+    }
+    .when {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-muted);
+        text-align: right;
+        padding-top: 21px;
+        font-variant-numeric: tabular-nums;
+    }
+    .node {
+        position: relative;
+        width: 13px;
+        height: 13px;
+        margin-top: 21px;
+        border-radius: 50%;
+        background: var(--color-bg);
+        border: 2px solid var(--color-rule);
+    }
+    .current .node {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+    }
+    .job {
+        padding: 18px 22px;
+    }
+    .org {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-muted);
+        margin-top: 2px;
+    }
+    .desc {
+        margin-top: var(--space-2);
+        color: var(--color-muted);
+        font-size: var(--text-sm);
+        max-width: 62ch;
+    }
+
+    /* skills: 2x2 cards with tags */
+    .skills {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .skill {
+        padding: 20px 22px;
+    }
+    .skill h3 {
+        margin-bottom: var(--space-3);
+    }
+    .tags {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .tag {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-accent);
+        border: 1px solid var(--color-rule);
+        padding: 1px 8px;
+        border-radius: 2px;
+    }
+
+    /* availability */
+    .avail {
+        padding: 24px;
+        display: grid;
+        gap: var(--space-3);
+    }
+    .avail p {
+        color: var(--color-muted);
+        max-width: 62ch;
+    }
+    .avail .status {
+        font-family: var(--font-mono);
+        font-size: var(--text-lg);
+        font-weight: 500;
+        color: var(--color-text);
+    }
+    .actions {
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        margin-top: var(--space-2);
+    }
+
+    @media (max-width: 760px) {
+        .intro-grid {
+            grid-template-columns: 1fr;
+        }
+        .skills {
+            grid-template-columns: 1fr;
+        }
+    }
+    @media (max-width: 560px) {
+        .entry {
+            grid-template-columns: 14px minmax(0, 1fr);
+            gap: var(--space-1) var(--space-3);
+        }
+        .entry::before {
+            left: 6px;
+        }
+        .when {
+            grid-column: 2;
+            text-align: left;
+            padding-top: 0;
+        }
+        .node {
+            grid-row: 1 / span 2;
+            margin-top: 2px;
+        }
+        .job {
+            grid-column: 2;
+        }
     }
 </style>
