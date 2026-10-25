@@ -1,0 +1,11 @@
+// Static-assets-only Worker: Cloudflare serves dist/ as plain files, no server code.
+// Having this file stops Workers Builds from auto-adding the @astrojs/cloudflare adapter.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "laubach-dev",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

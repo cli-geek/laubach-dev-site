@@ -1,20 +1,6 @@
 ---
-import { execSync } from "node:child_process";
-
 const year = new Date().getFullYear();
-
-// Short git SHA at build time. Cloudflare Workers Builds provides it as an env
-// var; locally fall back to git. Omit the label if neither is available.
-let sha = (process.env.WORKERS_CI_COMMIT_SHA ?? "").slice(0, 7);
-if (!sha) try {
-    sha = execSync("git rev-parse --short HEAD", {
-        stdio: ["ignore", "pipe", "ignore"],
-    })
-        .toString()
-        .trim();
-} catch {
-    sha = "";
-}
+const sha = __BUILD_SHA__;
 ---
 <footer>
     <div class="footer-container">

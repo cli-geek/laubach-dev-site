@@ -6,7 +6,10 @@ Live at https://laubach.dev.
 ## Deploy: read this first
 
 **A push to `main` redeploys the live site.** Cloudflare Workers (static assets)
-builds from the `laubach-dev/` subdirectory (root dir set in the Cloudflare dashboard; no wrangler config in the repo).
+builds from the `laubach-dev/` subdirectory and deploys with `npx wrangler deploy`.
+`laubach-dev/wrangler.jsonc` makes it a static-assets-only Worker (no adapter, no
+server code). Don't add `@astrojs/cloudflare`; without this file Cloudflare
+auto-injects it.
 Never push without being asked. Run `npm run build` locally before any push;
 a broken build means a failed deploy.
 
@@ -20,7 +23,8 @@ docs/progress/          dated session logs (decisions, done, remaining work)
 docs/design/style-draft.html  approved visual reference (tokens, hero, cards); match it
 docs/content-drafts.md  site copy with approval status; check before writing page text
 laubach-dev/            the Astro project (all commands run here)
-  astro.config.mjs      Astro + @astrojs/react integration
+  astro.config.mjs      Astro + @astrojs/react; injects __BUILD_SHA__ for the footer
+  wrangler.jsonc        Cloudflare: serve dist/ as static assets, 404.html for misses
   public/               static files served as-is (favicon, resume PDF later)
   src/styles/global.css reset + design tokens (--color-*, --space-*, --text-*)
   src/layouts/Base.astro  <head>, Nav, <main><slot/></main>, Footer
