@@ -56,7 +56,7 @@ const live = WEB3FORMS_ACCESS_KEY !== "";
                 });
                 const data = await res.json();
                 if (res.ok && data.success) {
-                    status.textContent = "Sent. I'll reply to the email you gave.";
+                    status.textContent = "Sent. I'll reply soon.";
                     form.reset();
                 } else {
                     status.textContent = "That didn't send. Email hello@laubach.dev instead.";
