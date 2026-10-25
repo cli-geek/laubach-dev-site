@@ -12,6 +12,9 @@ a broken build means a failed deploy.
 
 ## Layout
 
+`docs/` is local-only (gitignored): personal notes, session logs, design and
+content drafts. It may be missing on a fresh clone.
+
 ```
 docs/progress/          dated session logs (decisions, done, remaining work)
 docs/design/style-draft.html  approved visual reference (tokens, hero, cards); match it
@@ -101,7 +104,7 @@ Planned pages:
 - custom 404 page
 - blog / notes (Astro content collections)
 
-**Deploy hold:** the Boo & Breakfast project entry and `public/resume.pdf` (which
-mentions it) must not reach `main` before 2026-10-30. See `docs/content-drafts.md`.
+**Soft deploy preference:** Austin would rather the Boo & Breakfast entry and
+`public/resume.pdf` go live after 2026-10-29, but it isn't a hard rule.
 
 Next: collect real content page by page, then implement.
