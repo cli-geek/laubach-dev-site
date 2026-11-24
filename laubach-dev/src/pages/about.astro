@@ -1,358 +1,219 @@
 ---
 import Base from "../layouts/Base.astro";
-import SectionMarker from "../components/SectionMarker.astro";
-import Prompt from "../components/Prompt.astro";
+import SectionHead from "../components/SectionHead.astro";
 
 const experience = [
     {
         role: "Software Engineering Intern",
         org: "Woodsong Technologies",
         place: "Annapolis Junction, MD",
-        dates: "Jun 2026 – now",
-        current: true,
-        text: "IoT proof-of-concept: communication layer design, React telemetry dashboard, HTTP loopback proxy, Python networking services on Linux with systemd.",
+        dates: "Jun 2026 – present",
+        points: [
+            "Write STM32 firmware for IoT devices, working with the hardware team around their PCB designs and BOMs.",
+            "Primary developer of the user interfaces that operate and configure these devices, like a React telemetry dashboard, as well as of the communication layer and network code that connects the firmware to the UI.",
+            "Build Python networking services on Linux that start at boot through systemd.",
+            "The proclaimed 'Linux-man' of the office",
+        ],
     },
     {
         role: "Print & Marketing Associate",
         org: "Staples",
         place: "Baltimore, MD",
-        dates: "Sep 2022 – now",
-        current: true,
-        text: "",
+        dates: "Sep 2022 – Jun 2026",
+        points: [],
     },
     {
         role: "Entry Level PC Technician (contract)",
         org: "Data Networks",
         place: "Baltimore, MD",
         dates: "Jun – Aug 2021",
-        current: false,
-        text: "Configured 25+ Juniper switches a day for enterprise deployments.",
+        points: ["Configured 25+ Juniper switches a day for enterprise deployments."],
     },
 ];
 
 const skills = [
     { group: "Languages", items: ["C", "C++", "Rust", "Python", "JavaScript", "Swift", "GDScript", "Bash", "x86 assembly", "RISC-V assembly"] },
+    { group: "Embedded", items: ["STM32", "microcontrollers", "firmware"] },
     { group: "Web", items: ["React", "HTML", "CSS", "REST APIs"] },
     { group: "Systems and networking", items: ["Linux", "Git", "systemd", "Cisco networking", "Juniper networking", "system imaging"] },
     { group: "Tools", items: ["Godot", "SQLite", "Pandas", "Flask"] },
 ];
 ---
-<Base title="About - laubach.dev" description="About Austin Laubach: UMBC computer science student graduating May 2027, experience, skills, and availability.">
-    <header class="intro">
-        <Prompt cmd="cat about.md" />
-        <h1 class="page-title">about</h1>
-        <div class="intro-grid">
-            <div class="bio">
-                <p class="lead">I'm Austin Laubach. I was born and raised in <strong>Baltimore, Maryland</strong>, and I'm finishing a <strong>B.S. in Computer Science at UMBC</strong>, graduating in May 2027.</p>
-                <p>Right now I build whatever interests me or fixes a problem in my own life: a job-application tool, a browser extension, a battery indicator for macOS, a multiplayer game. Next I want to work closer to the hardware: <strong>signal processing and lower-level C++</strong>, toward my long-term goal of working in <strong>biocomputing</strong>. I'd also like to do more with games. I love them, and I enjoy making them.</p>
-                <p>Outside of code I read and watch a lot of science fiction, and I hike.</p>
-            </div>
-            <dl class="facts card">
-                <div><dt>based in</dt><dd>Baltimore, MD</dd></div>
-                <div><dt>studying</dt><dd>B.S. Computer Science, UMBC</dd></div>
-                <div><dt>graduating</dt><dd>May 2027</dd></div>
-                <div><dt>status</dt><dd><span class="dot" aria-hidden="true">●</span> open to full-time roles</dd></div>
-            </dl>
+<Base title="About - laubach.dev" description="About Austin Laubach: UMBC computer science student graduating May 2027, experience and skills.">
+    <header class="page-head">
+        <div class="wrap">
+            <h1 class="page-title">About</h1>
         </div>
     </header>
 
-    <section id="education">
-        <SectionMarker n="01" name="education" />
-        <article class="edu card">
-            <div>
-                <h3>University of Maryland, Baltimore County</h3>
-                <p>B.S. Computer Science · Baltimore, MD</p>
+    <section id="bio">
+        <div class="wrap">
+            <div class="intro-grid">
+                <div class="bio">
+                    <p class="lead">Hi, I'm Austin Laubach. I was born and raised in Baltimore, Maryland. I'm currently finishing my B.S. in Computer Science at UMBC, with a prospective graduation in May 2027. I love cool things and working on them. I love reading sci-fi and fantasy, and I also love nature and going on hikes. My long-term goal is to work in biocomputing, restoring functions to those who've lost them.</p>
+                    <p>Most of my work right now is close to the hardware. At my internship I write <strong>STM32 firmware</strong> and the software that connects it to the user interface.</p>
+                    <p>Outside of work I build tools for problems I run into: <strong>gantry, a job-search app written in Rust</strong>, and simple tools too, like <strong>batt-buddy, a macOS battery indicator written in Swift.</strong> I also helped build <strong>SPHERExplorer, a NASA image explorer</strong>, with a teammate for the 2026 Space Apps Challenge, <strong>where we placed first in the local competition</strong>.</p>
+                    <p>I'd also like to do more with video games. I love playing them, and I enjoy making them, as well as all of the fun (and not-so-fun) math that comes with that.</p>
+                    <p class="actions"><a class="btn secondary" href="/resume.pdf">Résumé (PDF)</a></p>
+                </div>
+                <dl class="facts card">
+                    <dt>Based in</dt><dd>Baltimore/DC area</dd>
+                    <dt>Studying</dt><dd>B.S. Computer Science, UMBC</dd>
+                    <dt>Graduating</dt><dd>May 2027</dd>
+                </dl>
             </div>
-            <div class="edu-date">
-                <span class="big">May 2027</span>
-                <span class="small">expected</span>
-            </div>
-        </article>
-    </section>
-
-    <section id="experience">
-        <SectionMarker n="02" name="experience" />
-        <ol class="timeline">
-            {experience.map((e) => (
-                <li class:list={["entry", { current: e.current }]}>
-                    <span class="when">{e.dates}</span>
-                    <span class="node" aria-hidden="true"></span>
-                    <article class="card job">
-                        <h3>{e.role}</h3>
-                        <p class="org">{e.org} · {e.place}</p>
-                        {e.text && <p class="desc">{e.text}</p>}
-                    </article>
-                </li>
-            ))}
-        </ol>
-    </section>
-
-    <section id="skills">
-        <SectionMarker n="03" name="skills" />
-        <div class="skills">
-            {skills.map((s) => (
-                <article class="card skill">
-                    <h3>{s.group}</h3>
-                    <ul class="tags">
-                        {s.items.map((t) => <li class="tag">{t}</li>)}
-                    </ul>
-                </article>
-            ))}
         </div>
     </section>
 
-    <section id="availability">
-        <SectionMarker n="04" name="availability" />
-        <article class="card avail">
-            <p class="status"><span class="dot" aria-hidden="true">●</span> Open to full-time roles from May 2027</p>
-            <p>I'm looking for full-time roles starting May 2027. I'm in the Baltimore/DC area and open to local or fully remote work. I'm not looking to relocate.</p>
-            <div class="actions">
-                <a class="btn primary" href="/resume.pdf">resume.pdf</a>
-                <a class="btn" href="/contact">contact me</a>
+    <section class="band" id="education">
+        <div class="wrap">
+            <SectionHead title="Education" />
+            <article class="card entry">
+                <div class="entry-head">
+                    <h3>University of Maryland, Baltimore County</h3>
+                    <span class="when">May 2027 (expected)</span>
+                </div>
+                <p class="muted">B.S. Computer Science · Baltimore, MD</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="wrap">
+            <SectionHead title="Experience" />
+            <div class="stack">
+                {experience.map((e) => (
+                    <article class="card entry">
+                        <div class="entry-head">
+                            <h3>{e.role}</h3>
+                            <span class="when">{e.dates}</span>
+                        </div>
+                        <p class="muted">{e.org} · {e.place}</p>
+                        {e.points.length > 0 && (
+                            <ul class="desc">
+                                {e.points.map((p) => <li>{p}</li>)}
+                            </ul>
+                        )}
+                    </article>
+                ))}
             </div>
-        </article>
+        </div>
+    </section>
+
+    <section class="band" id="skills">
+        <div class="wrap">
+            <SectionHead title="Skills" />
+            <div class="card">
+                <dl class="skills">
+                    {skills.map((s) => (
+                        <>
+                            <dt>{s.group}</dt>
+                            <dd>{s.items.join(", ")}</dd>
+                        </>
+                    ))}
+                </dl>
+            </div>
+        </div>
     </section>
 </Base>
 <style>
-    section {
-        padding-block: var(--space-8);
-    }
     h3 {
-        font-family: var(--font-mono);
-        font-size: var(--text-base);
-        font-weight: 700;
+        font-size: var(--text-md);
+        font-weight: 600;
     }
     strong {
         color: var(--color-text);
         font-weight: 500;
     }
-    .dot {
-        color: var(--color-ok);
-    }
 
-    /* intro: bio beside a quick-facts panel */
-    /* same top spacing and heading gap as the other pages */
-    .intro {
-        padding-block: 40px var(--space-8);
-    }
+    /* bio beside a quick-facts panel */
     .intro-grid {
         display: grid;
         grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-        gap: var(--space-8);
+        gap: 32px;
         align-items: start;
     }
     .bio {
         display: grid;
-        gap: var(--space-4);
-        color: var(--color-muted);
+        gap: var(--space-3);
     }
     .bio p {
-        max-width: 62ch;
+        max-width: 60ch;
     }
-    .bio .lead {
-        font-size: var(--text-lg);
-        color: var(--color-text);
-        line-height: 1.5;
+    .lead {
+        font-size: var(--text-md);
     }
-    .facts {
-        margin: 0;
-        padding: 20px 22px;
-        display: grid;
-        gap: var(--space-3);
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-    }
-    .facts div {
-        display: grid;
-        gap: 2px;
-    }
-    .facts dt {
-        font-size: var(--text-xs);
+    .bio p:not(.lead):not(.actions) {
         color: var(--color-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
     }
-    .facts dd {
-        margin: 0;
-    }
-
-    /* education */
-    .edu {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: var(--space-6);
-        flex-wrap: wrap;
-        padding: 22px 24px;
-    }
-    .edu h3 {
-        font-size: var(--text-lg);
-    }
-    .edu p {
-        color: var(--color-muted);
-        font-size: var(--text-sm);
+    .actions {
         margin-top: var(--space-1);
     }
-    .edu-date {
-        display: grid;
-        justify-items: end;
-        font-family: var(--font-mono);
-    }
-    .edu-date .big {
-        font-size: var(--text-lg);
-        font-weight: 700;
-        color: var(--color-accent);
-        font-variant-numeric: tabular-nums;
-    }
-    .edu-date .small {
-        font-size: var(--text-xs);
-        color: var(--color-muted);
+    .facts {
+        align-content: start;
     }
 
-    /* experience: dates | rail | card */
-    .timeline {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        position: relative;
+    .stack {
         display: grid;
-        gap: var(--space-4);
+        gap: 14px;
     }
     .entry {
         display: grid;
-        grid-template-columns: 9rem 14px minmax(0, 1fr);
-        gap: var(--space-4);
-        align-items: start;
-        position: relative;
-    }
-    /* the rail: a line through every node column */
-    .entry::before {
-        content: "";
-        position: absolute;
-        left: calc(9rem + var(--space-4) + 6px);
-        top: 0;
-        bottom: calc(-1 * var(--space-4));
-        border-left: 1px solid var(--color-rule);
-    }
-    .entry:last-child::before {
-        bottom: auto;
-        height: 26px;
-    }
-    .when {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
-        color: var(--color-muted);
-        text-align: right;
-        padding-top: 21px;
-        font-variant-numeric: tabular-nums;
-    }
-    .node {
-        position: relative;
-        width: 13px;
-        height: 13px;
-        margin-top: 21px;
-        border-radius: 50%;
-        background: var(--color-bg);
-        border: 2px solid var(--color-rule);
-    }
-    .current .node {
-        border-color: var(--color-accent);
-        background: var(--color-accent);
-    }
-    .job {
-        padding: 18px 22px;
-    }
-    .org {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
-        color: var(--color-muted);
-        margin-top: 2px;
-    }
-    .desc {
-        margin-top: var(--space-2);
-        color: var(--color-muted);
-        font-size: var(--text-sm);
-        max-width: 62ch;
-    }
-
-    /* skills: 2x2 cards with tags */
-    .skills {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-    }
-    .skill {
-        padding: 20px 22px;
-    }
-    .skill h3 {
-        margin-bottom: var(--space-3);
-    }
-    .tags {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
         gap: 6px;
     }
-    .tag {
-        font-family: var(--font-mono);
+    .entry-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 2px 12px;
+    }
+    .when {
+        margin-left: auto;
         font-size: var(--text-xs);
-        color: var(--color-accent);
-        border: 1px solid var(--color-rule);
-        padding: 1px 8px;
-        border-radius: 2px;
+        color: var(--color-muted);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+    .muted {
+        color: var(--color-muted);
+        font-size: var(--text-sm);
+    }
+    /* one thought per line, same bullets as project cards */
+    .desc {
+        list-style: disc;
+        padding-left: 1.1em;
+        margin-top: var(--space-2);
+        display: grid;
+        gap: var(--space-1);
+        font-size: var(--text-sm);
+        max-width: 70ch;
     }
 
-    /* availability */
-    .avail {
-        padding: 24px;
-        display: grid;
-        gap: var(--space-3);
+    .skills {
+        gap: 10px 20px;
     }
-    .avail p {
-        color: var(--color-muted);
-        max-width: 62ch;
-    }
-    .avail .status {
-        font-family: var(--font-mono);
-        font-size: var(--text-lg);
+    .skills dt {
         font-weight: 500;
         color: var(--color-text);
-    }
-    .actions {
-        display: flex;
-        gap: var(--space-3);
-        flex-wrap: wrap;
-        margin-top: var(--space-2);
     }
 
     @media (max-width: 760px) {
         .intro-grid {
             grid-template-columns: 1fr;
+            gap: var(--space-4);
+        }
+    }
+    @media (max-width: 480px) {
+        .when {
+            margin-left: 0;
+            width: 100%;
         }
         .skills {
             grid-template-columns: 1fr;
+            gap: 2px;
         }
-    }
-    @media (max-width: 560px) {
-        .entry {
-            grid-template-columns: 14px minmax(0, 1fr);
-            gap: var(--space-1) var(--space-3);
-        }
-        .entry::before {
-            left: 6px;
-        }
-        .when {
-            grid-column: 2;
-            text-align: left;
-            padding-top: 0;
-        }
-        .node {
-            grid-row: 1 / span 2;
-            margin-top: 2px;
-        }
-        .job {
-            grid-column: 2;
+        .skills dd {
+            margin-bottom: var(--space-2);
         }
     }
 </style>

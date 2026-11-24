@@ -20,15 +20,16 @@ content drafts. It may be missing on a fresh clone.
 
 ```
 docs/progress/          dated session logs (decisions, done, remaining work)
-docs/design/style-draft.html  approved visual reference (tokens, hero, cards); match it
+docs/design/redesign-2026-11.html  approved visual reference (2026-11-24); match it
+docs/design/style-draft.html  superseded terminal-style draft; don't use
 docs/content-drafts.md  site copy with approval status; check before writing page text
 laubach-dev/            the Astro project (all commands run here)
-  astro.config.mjs      Astro + @astrojs/react; injects __BUILD_SHA__ for the footer
+  astro.config.mjs      Astro + @astrojs/react
   wrangler.jsonc        Cloudflare: serve dist/ as static assets, 404.html for misses
   public/               static files served as-is (favicon, resume PDF later)
   src/styles/global.css reset + design tokens (--color-*, --space-*, --text-*)
   src/layouts/Base.astro  <head>, Nav, <main><slot/></main>, Footer
-  src/components/       Nav.astro, Footer.astro
+  src/components/       Nav, Footer, Hero, SectionHead, ProjectCard (.astro)
   src/pages/            one file per route: index, projects, about, contact
 ```
 
@@ -63,19 +64,25 @@ Node >= 22.12 (see `package.json` engines).
 - External links: `target="_blank" rel="noopener noreferrer"`.
 - Keep the `:focus-visible` outline and semantic HTML (`<nav>`, `<ul>/<li>`, headings in order).
 - Mobile breakpoint in use: `@media (max-width: 480px)`. Check layouts at ~400px wide.
-- Dark mode is planned; add colors as tokens in `:root` so a dark block can override them later.
+- Theme follows the OS: light palette in `:root`, dark overrides under
+  `prefers-color-scheme: dark`. Add every new color as a token in both.
 
-## Brand and visual direction (decided 2026-10-24)
+## Brand and visual direction (decided 2026-11-24, replaces the 2026-10-24 terminal look)
 
-- The header wordmark `[ laubach.dev ]` (monospace, square brackets) stays. Restyle around it, not over it.
-- Look: terminal + blueprint mix. Clean, engineered, computer-science feel.
-  - **Dark-first**, with a light theme via `prefers-color-scheme`.
-  - Sections open with labelled mono markers: `01 | projects`, `02 | about`.
-  - Terminal idioms used sparingly as content: shell prompt, `ls -l`-style project rows, build-status footer.
-  - **No grid background.** Austin rejected it.
-  - **One interaction style site-wide.** Item cards (strengths, projects) share a
-    `.card` style: on hover/focus they fade to an accent tint over 0.25s and scale
-    to 1.015. No icons, corner brackets, or glows; don't mix in a second style.
+- Goal: industry professional, sleek, uniform. Not "techy", not a plain résumé either.
+- The header wordmark `[ laubach.dev ]` (monospace, square brackets) stays. It is
+  the only monospace text on the site; everything else is IBM Plex Sans.
+- Copper accent on cool slate neutrals. Full-width section bands alternate
+  background colors for rhythm. Spacing is compact: keep section padding tight
+  around headings.
+- Sentence case everywhere. No pills or chips, status dots, shell prompts, blinking
+  cursors, rotating text, numbered section markers, `./` nav markers, `›` bullets,
+  `↗` arrows, build-status footer, or grid background.
+- **One card style site-wide** (`.card`): surface fill, 1px border, 6px radius; on
+  hover/focus only the border shifts toward the accent. No scale, tint, icons, or glows.
+- Buttons are rectangles (4px radius). At most one solid primary button per page;
+  everything else is a text link.
+- No availability or job-seeking copy ("open to roles", "looking for").
 - Public contact address: `hello@laubach.dev` (Cloudflare Email Routing). Never publish Austin's personal email.
 
 ## Working with Austin
@@ -86,29 +93,16 @@ Node >= 22.12 (see `package.json` engines).
   placeholders visibly and let Austin confirm before they ship.
 - Voice: plain first person, like a professional describing their own work.
   No product-style taglines, cute labels, or decorative jargon (e.g. `linux(1)`,
-  `man -k austin`). Terminal styling lives in the visuals, not the wording.
+  `man -k austin`).
 - After a working session, add or update a dated log in `docs/progress/`
   (format: decisions, what closed, remaining work).
 - Commits: Conventional Commits, imperative, lowercase, no trailing period.
 
-## Current state (2026-10-24)
+## Current state (2026-11-24)
 
-Redesign is built on branch `redesign` (committed and pushed 2026-10-24): new
-tokens, nav, footer, home/projects/about/contact/404 pages. Project data lives in
-`laubach-dev/src/data/projects.ts`; the Web3Forms key goes in
-`laubach-dev/src/config.ts` (empty = form disabled). The blog is not built yet.
-
-Planned pages:
-
-- `/` home: whoami hero with rotating "I build" phrases (command-line tools, web apps, games), 01 strengths 2x2 (Linux, Networking, Systems setup, Deployment), 02 projects, 03 about, 04 contact
-- `/projects`: full project list
-- `/about`: bio, credentials, resume
-- `/contact`: `hello@laubach.dev` + contact form
-- `/resume.pdf` in `public/`, linked from hero and about
-- custom 404 page
-- blog / notes (Astro content collections)
-
-**Soft deploy preference:** Austin would rather the Boo & Breakfast entry and
-`public/resume.pdf` go live after 2026-10-29, but it isn't a hard rule.
-
-Next: collect real content page by page, then implement.
+The 2026-11-24 redesign (copper, sans, compact) is built in the working tree and
+not yet committed; `main` still serves the October terminal look. Pages: home,
+projects, about, contact (working Web3Forms form), and 404. Project data lives in
+`laubach-dev/src/data/projects.ts`; the Web3Forms key is in
+`laubach-dev/src/config.ts`. Not built yet: blog/notes, SEO and social preview
+tags. The latest handoff is the newest file in `docs/progress/` (local only).

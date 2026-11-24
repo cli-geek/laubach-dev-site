@@ -24,18 +24,19 @@ select {
 }
 
 /* ---- Design tokens ---- */
-/* Dark-first; the light palette overrides under prefers-color-scheme. */
+/* Light palette by default; the dark palette overrides under prefers-color-scheme. */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* color */
-  --color-bg: #0f1318;
-  --color-surface: #151a21;
-  --color-text: #dfe4ea;
-  --color-muted: #8a95a3;
-  --color-rule: #253040;
-  --color-accent: #6cc3e6;
-  --color-ok: #7fd18b;
+  --color-bg: #f6f7f9;
+  --color-band: #edf0f3;
+  --color-surface: #ffffff;
+  --color-text: #161b22;
+  --color-muted: #5a6573;
+  --color-rule: #dadfe5;
+  --color-accent: #9c4f17;
+  --color-on-accent: #ffffff;
 
   /* type */
   --font-sans:
@@ -43,15 +44,15 @@ select {
   --font-mono:
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --text-xs: 0.78rem;
+  --text-xs: 0.8rem;
   --text-sm: 0.875rem;
-  --text-base: 1rem;
+  --text-base: 0.95rem;
+  --text-md: 1.05rem;
   --text-lg: 1.25rem;
-  --text-xl: 2rem;
-  --text-2xl: clamp(2.2rem, 6vw, 3.4rem);
+  --text-2xl: clamp(2rem, 5vw, 2.6rem);
 
   --leading-tight: 1.2;
-  --leading-normal: 1.6;
+  --leading-normal: 1.55;
 
   /* spacing scale */
   --space-1: 0.25rem;
@@ -64,22 +65,22 @@ select {
   --space-16: 4rem;
 
   /* layout */
-  --max-width: 720px; /* readable content column */
-  --max-width-wide: 1040px; /* nav, footer, wide sections */
-  --gutter: 20px;
-  --radius: 4px;
+  --max-width: 960px;
+  --radius: 6px;
+  --radius-sm: 4px;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: light;
-    --color-bg: #f5f6f8;
-    --color-surface: #ffffff;
-    --color-text: #151a21;
-    --color-muted: #586474;
-    --color-rule: #d9dee5;
-    --color-accent: #0a6c96;
-    --color-ok: #2c7a3a;
+    color-scheme: dark;
+    --color-bg: #0f1318;
+    --color-band: #141a21;
+    --color-surface: #19202a;
+    --color-text: #e2e6eb;
+    --color-muted: #949fad;
+    --color-rule: #28323f;
+    --color-accent: #e39d62;
+    --color-on-accent: #0f1318;
   }
 }
 
@@ -100,19 +101,12 @@ body {
 main {
   flex: 1;
   width: 100%;
-  max-width: var(--max-width-wide);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
 }
 
 h1,
 h2,
 h3 {
   line-height: var(--leading-tight);
-}
-
-p {
-  max-width: var(--max-width);
 }
 
 a {
@@ -124,13 +118,12 @@ a:hover {
   text-underline-offset: 3px;
 }
 
-code,
-pre {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
+ul {
+  list-style: none;
+  padding: 0;
 }
 
-/* focus visibility — accessibility, do not remove */
+/* focus visibility: accessibility, do not remove */
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
@@ -146,75 +139,102 @@ pre {
   white-space: nowrap;
 }
 
-/* One hover language for every item card: fade to accent tint + slight scale. */
+/* Layout: every band, header and footer puts a .wrap inside it. */
+.wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.band {
+  background: var(--color-band);
+}
+section .wrap {
+  padding-block: 20px 28px;
+}
+
+/* One card style site-wide: hover/focus only shifts the border toward the accent. */
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius);
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
+  padding: 18px 20px;
+  transition: border-color 0.2s ease;
 }
 .card:hover,
 .card:focus-within {
-  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-rule));
-  transform: scale(1.015);
-}
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-  .card:hover,
-  .card:focus-within {
-    transform: none;
-  }
+  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-rule));
 }
 
-/* Buttons (links styled as buttons) */
+/* Buttons (links styled as buttons). At most one .primary per page. */
 .btn {
   display: inline-block;
-  font-family: var(--font-mono);
+  font-weight: 500;
   font-size: var(--text-sm);
-  padding: 9px 16px;
-  border: 1px solid var(--color-rule);
-  border-radius: 3px;
-  color: var(--color-text);
-  background: transparent;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-accent);
+  transition: background-color 0.2s ease;
   cursor: pointer;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
 }
 .btn:hover {
-  border-color: var(--color-accent);
   text-decoration: none;
 }
 .btn.primary {
   background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-bg);
-  font-weight: 500;
+  color: var(--color-on-accent);
 }
 .btn.primary:hover {
   background: color-mix(in srgb, var(--color-accent) 85%, var(--color-text));
+}
+.btn.secondary {
+  color: var(--color-accent);
+}
+.btn.secondary:hover {
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Page heading for inner pages */
-.page-title {
-  font-family: var(--font-mono);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: var(--space-6);
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .btn {
+    transition: none;
+  }
 }
 
-section {
-  padding-block: 40px;
+/* Page heading for inner pages */
+.page-head .wrap {
+  padding-block: 36px 8px;
+}
+.page-title {
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* Definition lists: label left, value right */
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 20px;
+  font-size: var(--text-sm);
+}
+dt {
+  color: var(--color-muted);
+}
+dd {
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .page-head .wrap {
+    padding-block: 28px 8px;
+  }
+  section .wrap {
+    padding-block: 24px;
+  }
 }

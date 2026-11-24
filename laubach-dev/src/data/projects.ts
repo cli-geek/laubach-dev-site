@@ -6,8 +6,8 @@ export interface ProjectLink {
 export interface Project {
   name: string;
   date: string;
-  /** Shown as a status chip next to the name. */
-  status?: "in progress";
+  /** Shown after the date, e.g. "Oct 2026 – present · In progress". */
+  status?: "in progress" | "no longer receiving updates";
   tech: string[];
   /** One-sentence lead: what it is. */
   summary: string;
@@ -21,47 +21,37 @@ export interface Project {
   featured: boolean;
 }
 
-// Order is by professional value, not date. Home features the featured ones.
+// Home features the featured ones.
 export const projects: Project[] = [
   {
+    name: "SPHERExplorer",
+    date: "Nov 2026",
+    note: "1st place, NASA Space Apps Challenge 2026 (local event)",
+    tech: ["Python", "TypeScript", "WebGL2", "Cloud Run"],
+    summary:
+      "A public web tool for exploring NASA SPHEREx images of the sky over time: search any object, play its images in time order, and compare them with partner surveys. Built with Matthew Saunders for the NASA Space Apps Challenge 2026.",
+    points: [
+      "I set up hosting: CI deploys to Google Cloud Run and the spherexplorer.earth domain.",
+      "I built the full-page app layout and wrote the guided tour, public docs and submission.",
+    ],
+    links: [
+      { label: "Live site", href: "https://spherexplorer.earth" },
+      { label: "Repo", href: "https://github.com/mattsaund/SPHERExplorer" },
+      { label: "Demo video", href: "https://www.youtube.com/watch?v=EtcNxZPPJSA" },
+    ],
+    featured: true,
+  },
+  {
     name: "gantry",
-    date: "Oct 2026 – now",
+    date: "Oct 2026 – present",
     status: "in progress",
     tech: ["Rust", "SQLite"],
-    summary: "A desktop app for job seekers that finds matching postings and prepares an application for each one.",
+    summary: "A desktop app for job seekers that finds matching postings and will prepare an application for each one, which you review and submit yourself.",
     points: [
-      "You review every application and submit it yourself with one click.",
-      'Working today: discovery from Greenhouse, Lever and Ashby boards, the SimplifyJobs lists and Hacker News "Who is hiring?"',
-      "Duplicates are removed and your filters applied.",
+      'Working today: discovery from Greenhouse, Lever and Ashby boards, the SimplifyJobs lists and Hacker News "Who is hiring?", with duplicates removed and your filters applied.',
+      "Next: the review app, and staging applications.",
     ],
-    links: [{ label: "repo", href: "https://github.com/cli-geek/gantry" }],
-    featured: true,
-  },
-  {
-    name: "Boo & Breakfast",
-    date: "Oct 2026 – now",
-    status: "in progress",
-    tech: ["Godot", "GDScript", "multiplayer server"],
-    summary: "A cooperative multiplayer game for 2–6 players: you and your friends run a cozy haunted inn for monster guests.",
-    points: [
-      "Each player holds part of the puzzle, so rooms, amenities and overnight problems get solved together.",
-      "Runs in the browser or as a Linux build, on its own multiplayer server.",
-    ],
-    note: "Built for Handshake's AI Skills Studio Challenge",
-    links: [{ label: "Play here", href: "https://boo-and-breakfast.netlify.app" }],
-    featured: true,
-  },
-  {
-    name: "noverview",
-    date: "Apr 2026",
-    tech: ["JavaScript", "Firefox extension"],
-    summary: "A Firefox extension that hides Google's AI Overviews and other AI-generated boxes, leaving only links to websites.",
-    points: [
-      "Loads several pages of results into one.",
-      "Backs off on its own if Google rate-limits it.",
-      "Collects no data.",
-    ],
-    links: [{ label: "repo", href: "https://github.com/cli-geek/noverview" }],
+    links: [{ label: "Repo", href: "https://github.com/cli-geek/gantry" }],
     featured: true,
   },
   {
@@ -70,12 +60,12 @@ export const projects: Project[] = [
     tech: ["React", "JavaScript", "CSS"],
     summary: "A browser-based in-flight entertainment interface for an airline, built for UMBC's CMSC 437.",
     points: [
-      "I led the team and set up the repository and issue tracking.",
+      "I led the team, assigned roles, and set up the repository and issue tracking.",
       "I built the shopping, food ordering and passenger services screens.",
     ],
     credit: "With William Dubois, Zcianty Orogo and Akrem Yusuf",
-    links: [{ label: "repo", href: "https://github.com/cli-geek/437-group3-semester-project" }],
-    featured: false,
+    links: [{ label: "Repo", href: "https://github.com/cli-geek/437-group3-semester-project" }],
+    featured: true,
   },
   {
     name: "batt-buddy",
@@ -87,7 +77,21 @@ export const projects: Project[] = [
       "One Swift file with no dependencies.",
       "A shell script installs it and sets it to start at login.",
     ],
-    links: [{ label: "repo", href: "https://github.com/cli-geek/batt-buddy" }],
+    links: [{ label: "Repo", href: "https://github.com/cli-geek/batt-buddy" }],
+    featured: false,
+  },
+  {
+    name: "noverview",
+    date: "Apr 2026",
+    status: "no longer receiving updates",
+    tech: ["JavaScript", "Firefox extension"],
+    summary: "A Firefox extension that hides Google's AI Overviews and other AI-generated boxes, leaving only links to websites.",
+    points: [
+      "Loads several pages of results into one.",
+      "Backs off on its own if Google rate-limits it.",
+      "Collects no data.",
+    ],
+    links: [{ label: "Repo", href: "https://github.com/cli-geek/noverview" }],
     featured: false,
   },
   {
@@ -96,7 +100,7 @@ export const projects: Project[] = [
     tech: ["Astro", "Cloudflare"],
     summary: "The site you're on: a static Astro build with plain CSS and light and dark themes.",
     points: ["Deploys to Cloudflare automatically on every push."],
-    links: [{ label: "repo", href: "https://github.com/cli-geek/laubach-dev-site" }],
+    links: [{ label: "Repo", href: "https://github.com/cli-geek/laubach-dev-site" }],
     featured: false,
   },
 ];

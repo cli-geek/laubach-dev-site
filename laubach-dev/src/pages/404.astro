@@ -1,12 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
-import SectionMarker from "../components/SectionMarker.astro";
 ---
 <Base title="Not found - laubach.dev" description="That page doesn't exist on laubach.dev.">
+    <header class="page-head">
+        <div class="wrap">
+            <h1 class="page-title">Page not found</h1>
+        </div>
+    </header>
     <section>
-        <SectionMarker n="404" name="not found" />
-        <p class="err">bash: <span id="missing-path">this page</span>: No such file or directory</p>
-        <p class="links"><a class="btn primary" href="/">home</a> <a class="btn" href="/projects">projects</a></p>
+        <div class="wrap">
+            <p class="err">There's nothing at <span id="missing-path">this address</span>.</p>
+            <p class="actions"><a class="btn primary" href="/">Home</a> <a href="/projects">Projects</a></p>
+        </div>
     </section>
 </Base>
 <script>
@@ -15,18 +20,19 @@ import SectionMarker from "../components/SectionMarker.astro";
 </script>
 <style>
     .err {
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
         color: var(--color-muted);
         overflow-wrap: anywhere;
     }
     .err span {
         color: var(--color-text);
     }
-    .links {
+    .actions {
         margin-top: var(--space-6);
         display: flex;
-        gap: var(--space-3);
+        align-items: center;
+        gap: 10px 20px;
         flex-wrap: wrap;
+        font-size: var(--text-sm);
+        font-weight: 500;
     }
 </style>

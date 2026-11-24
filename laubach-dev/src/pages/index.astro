@@ -1,145 +1,125 @@
 ---
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
-import SectionMarker from "../components/SectionMarker.astro";
+import SectionHead from "../components/SectionHead.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { projects } from "../data/projects";
 
 const featured = projects.filter((p) => p.featured);
 const strengths = [
-    { name: "Linux", text: "I use Arch Linux (EndeavourOS) every day and handle installs, configuration, and fixes from the command line." },
+    { name: "Linux", text: "I use Arch Linux (EndeavourOS) every day and handle installs, configuration and fixes from the command line. At work, I write Python networking scripts and packet forwarders for internal testing tools, designed to run at startup via systemd." },
     { name: "Networking", text: "I helped build the networking lab at Sollers Point Technical High School: two interconnected networks, each with 6 switches and 6 routers. I handled most of the software and configuration." },
-    { name: "Systems setup", text: "I built a forwarder that carries GPIB instrument traffic over a USB serial connection, and I run Python networking services on Linux that start on boot through systemd." },
-    { name: "Deployment", text: "I took this site from buying the domain to DNS, HTTPS, and automatic deploys on Cloudflare." },
+    { name: "Embedded", text: "I write firmware for STM32 microcontrollers on new IoT devices and connect it to the UI and software above it. I work with the hardware team on PCB designs and BOMs so the pieces fit together." },
 ];
 ---
-<Base title="laubach.dev" description="Austin Laubach, software engineering intern. I build command-line tools, web apps, and games. Strongest in Linux, networking, and setting up systems.">
+<Base title="laubach.dev" description="Austin Laubach, software engineering intern. I write firmware, desktop tools and web apps, and I'm strongest in Linux, networking and embedded systems.">
     <Hero />
 
-    <section id="strengths">
-        <SectionMarker n="01" name="strengths" />
-        <div class="man">
-            {strengths.map((s) => (
-                <article class="card"><h3>{s.name}</h3><p>{s.text}</p></article>
-            ))}
+    <section class="band" id="strengths">
+        <div class="wrap">
+            <SectionHead title="Strengths" />
+            <div class="grid-3">
+                {strengths.map((s) => (
+                    <article class="card strength"><h3>{s.name}</h3><p>{s.text}</p></article>
+                ))}
+            </div>
         </div>
     </section>
 
     <section id="projects">
-        <SectionMarker n="02" name="projects" />
-        <div class="ls">
-            {featured.map((p) => <ProjectCard project={p} />)}
+        <div class="wrap">
+            <SectionHead title="Projects" href="/projects" linkLabel="All projects" />
+            <div class="stack">
+                {featured.map((p) => <ProjectCard project={p} />)}
+            </div>
         </div>
-        <p class="more"><a class="btn" href="/projects">all projects</a></p>
     </section>
 
-    <section id="about">
-        <SectionMarker n="03" name="about" />
-        <div class="about">
-            <div>
-                <p>I'm Austin Laubach. I was born and raised in Baltimore, Maryland, and I'm finishing a B.S. in Computer Science at UMBC, graduating in May 2027.</p>
-                <p class="more"><a href="/about">more about me</a></p>
+    <section class="band" id="about">
+        <div class="wrap">
+            <SectionHead title="About" />
+            <div class="about">
+                <div>
+                    <p>Hi, I'm Austin Laubach. I was born and raised in Baltimore, Maryland. I'm currently finishing my B.S. in Computer Science at UMBC, with a prospective graduation in May 2027. I love cool things and working on them. I love reading sci-fi and fantasy, and I also love nature and going on hikes. My long-term goal is to work in biocomputing.</p>
+                    <p class="more"><a href="/about">More about me</a></p>
+                </div>
+                <dl>
+                    <dt>Degree</dt><dd>B.S. Computer Science, UMBC, May 2027</dd>
+                    <dt>Location</dt><dd>Baltimore/DC area</dd>
+                </dl>
             </div>
-            <dl>
-                <dt>degree</dt><dd>B.S. Computer Science, UMBC, May 2027</dd>
-                <dt>open to</dt><dd>full-time roles from May 2027</dd>
-                <dt>location</dt><dd>Baltimore/DC area or remote</dd>
-            </dl>
         </div>
     </section>
 
     <section id="contact">
-        <SectionMarker n="04" name="contact" />
-        <div class="contact">
-            <div class="addr">hello@laubach.dev</div>
-            <a class="btn primary" href="/contact">send a message</a>
+        <div class="wrap">
+            <SectionHead title="Contact" />
+            <div class="contact">
+                <div>
+                    <a class="addr" href="mailto:hello@laubach.dev">hello@laubach.dev</a>
+                    <p>Email me, or send a message through the contact form.</p>
+                </div>
+                <a class="btn secondary" href="/contact">Contact form</a>
+            </div>
         </div>
     </section>
 </Base>
 <style>
-    .man {
+    .grid-3 {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-3);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
     }
-    .man article {
-        padding: 20px 22px;
-    }
-    .man h3 {
+    .strength h3 {
+        font-size: var(--text-md);
+        font-weight: 600;
         margin-bottom: 6px;
-        font-family: var(--font-mono);
-        font-size: var(--text-base);
-        font-weight: 700;
     }
-    .man p {
+    .strength p {
         color: var(--color-muted);
         font-size: var(--text-sm);
-        max-width: 48ch;
     }
-    .ls {
+    .stack {
         display: grid;
-        gap: var(--space-3);
-    }
-    .more {
-        margin-top: var(--space-6);
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        gap: 14px;
     }
     .about {
         display: grid;
-        grid-template-columns: 1.1fr 1fr;
-        gap: 40px;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 32px;
+        align-items: start;
     }
     .about p {
         max-width: 60ch;
     }
     .about .more {
-        margin-top: 14px;
-    }
-    dl {
-        display: grid;
-        grid-template-columns: max-content 1fr;
-        gap: 10px 20px;
-        align-content: start;
-        font-family: var(--font-mono);
+        margin-top: var(--space-2);
         font-size: var(--text-sm);
-    }
-    dt {
-        color: var(--color-muted);
-    }
-    dt::after {
-        content: ":";
-    }
-    dd {
-        margin: 0;
+        font-weight: 500;
     }
     .contact {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-        gap: var(--space-6);
-        flex-wrap: wrap;
-        border: 1px solid var(--color-rule);
-        border-radius: var(--radius);
-        padding: var(--space-6);
-        background: var(--color-surface);
+        gap: 12px 20px;
+    }
+    .contact p {
+        color: var(--color-muted);
+        font-size: var(--text-sm);
     }
     .addr {
-        font-family: var(--font-mono);
-        font-size: var(--text-xl);
-        font-weight: 500;
+        font-size: var(--text-lg);
+        font-weight: 600;
         overflow-wrap: anywhere;
     }
-    @media (max-width: 640px) {
-        .man,
+    @media (max-width: 760px) {
+        .grid-3,
         .about {
             grid-template-columns: 1fr;
         }
         .about {
-            gap: var(--space-6);
-        }
-        .addr {
-            font-size: var(--text-lg);
+            gap: var(--space-4);
         }
     }
 </style>

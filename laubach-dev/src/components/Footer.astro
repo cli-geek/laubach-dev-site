@@ -1,48 +1,35 @@
 ---
 const year = new Date().getFullYear();
-const sha = __BUILD_SHA__;
 ---
 <footer>
-    <div class="footer-container">
-        <span>{sha && <><span class="ok">●</span> build {sha}</>}</span>
-        <ul class="links-container">
-            <li><a href="https://github.com/cli-geek" target="_blank" rel="noopener noreferrer">github</a></li>
-            <li><a href="https://www.linkedin.com/in/austinlaubach/" target="_blank" rel="noopener noreferrer">linkedin</a></li>
-            <li><a href="/contact">contact</a></li>
-        </ul>
+    <div class="wrap footer-container">
         <span>© {year} Austin Laubach</span>
+        <ul class="links-container">
+            <li><a href="https://github.com/cli-geek" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/austinlaubach/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
     </div>
 </footer>
 <style>
     footer {
-        margin-top: var(--space-12);
         border-top: 1px solid var(--color-rule);
     }
 
     .footer-container {
         display: flex;
-        justify-content: space-between;
-        gap: var(--space-4);
         flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px 24px;
+        padding-block: 16px;
 
-        max-width: var(--max-width-wide);
-        margin-inline: auto;
-        padding: 20px var(--gutter);
-
-        font-family: var(--font-mono);
         font-size: var(--text-xs);
         color: var(--color-muted);
     }
 
-    .ok {
-        color: var(--color-ok);
-    }
-
     .links-container {
         display: flex;
-        gap: 20px;
-        list-style: none;
-        padding: 0;
+        gap: 18px;
     }
 
     .links-container a {

@@ -1,21 +1,25 @@
 ---
 import Base from "../layouts/Base.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import Prompt from "../components/Prompt.astro";
 import { projects } from "../data/projects";
 ---
-<Base title="Projects - laubach.dev" description="Projects by Austin Laubach: gantry, Boo & Breakfast, noverview, and more.">
+<Base title="Projects - laubach.dev" description="Projects by Austin Laubach: SPHERExplorer, gantry, and more.">
+    <header class="page-head">
+        <div class="wrap">
+            <h1 class="page-title">Projects</h1>
+        </div>
+    </header>
     <section>
-        <Prompt cmd="cat projects.md" />
-        <h1 class="page-title">projects</h1>
-        <div class="ls">
-            {projects.map((p) => <ProjectCard project={p} />)}
+        <div class="wrap">
+            <div class="stack">
+                {projects.map((p) => <ProjectCard project={p} />)}
+            </div>
         </div>
     </section>
 </Base>
 <style>
-    .ls {
+    .stack {
         display: grid;
-        gap: var(--space-3);
+        gap: 14px;
     }
 </style>
