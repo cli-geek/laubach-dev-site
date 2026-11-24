@@ -100,8 +100,7 @@ Node >= 22.12 (see `package.json` engines).
 
 ## Current state (2026-11-24)
 
-The 2026-11-24 redesign (copper, sans, compact) is built in the working tree and
-not yet committed; `main` still serves the October terminal look. Pages: home,
+The 2026-11-24 redesign (copper, sans, compact) is live on `main`. Pages: home,
 projects, about, contact (working Web3Forms form), and 404. Project data lives in
 `laubach-dev/src/data/projects.ts`; the Web3Forms key is in
 `laubach-dev/src/config.ts`. Not built yet: blog/notes, SEO and social preview
